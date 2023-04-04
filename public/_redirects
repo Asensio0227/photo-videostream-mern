@@ -1,0 +1,4 @@
+/api/*  https://photo-videostream-mern.onrender.com/api/:splat  200
+
+/* /index.html 200
+
