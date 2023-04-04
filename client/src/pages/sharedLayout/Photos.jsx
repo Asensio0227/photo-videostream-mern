@@ -172,8 +172,8 @@ const Photos = () => {
             const { _id, name, images } = items;
             return (
               <div key={_id}>
-                {/* <img src={images} alt={name} /> */}
-                <img src={PF + images} alt={name} />
+                <img src={images} alt={name} />
+                {/* <img src={PF + images} alt={name} /> */}
                 <footer>
                   <p>{name}</p>
                   <button className="remove-btn" onClick={() =>removeImage(_id)}>
