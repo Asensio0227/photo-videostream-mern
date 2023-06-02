@@ -21,44 +21,43 @@ const photosUploader = async (req, res) => {
     })
 };
 
-const videoUploader = async (req, res) => {
-  const result = await cloudinary.uploader.upload(
-    req.files.video.tempFilePath,
-    {
-      resource_type:'video',
-      public_id:'videos-stream',
-      use_filename: true,
-      folder: "videos-stream",
-    }
-  );
-  fs.unlinkSync(req.files.video.tempFilePath);
-  return res
-    .status(StatusCodes.OK)
-    .json({
-      videos:result.secure_url
-    })
-};
-
 // const videoUploader = async (req, res) => {
-//   if (!req.files) {
-//     throw new CustomError.BadRequestError('No file uploaded');
-//   }
-//   console.log(req.files);
-//   const videoType = req.files.video;
-//   const extensionName = path.extname(videoType.name);
-//   const allowedExtension = ['.mp4'];;
-//   if (!allowedExtension.includes(extensionName)) {
-//     throw new CustomError.BadRequestError('Invalid video');
-//   }
-//   const imagePath = path.join(__dirname, '../public/video/' + `${videoType.name}`)
-//   await videoType.mv(imagePath);
-
+//   const result = await cloudinary.uploader.upload(
+//     req.files.video.tempFilePath,
+//     {
+//       resource_type:'video',
+//       public_id:'videos-stream',
+//       use_filename: true,
+//       folder: "videos-stream",
+//     }
+//   );
+//   fs.unlinkSync(req.files.video.tempFilePath);
 //   return res
 //     .status(StatusCodes.OK)
 //     .json({
-//       videos: videoType.name
-//     });
+//       videos:result.secure_url
+//     })
 // };
+
+const videoUploader = async (req, res) => {
+  if (!req.files) {
+    throw new CustomError.BadRequestError('No file uploaded');
+  }
+  const videoType = req.files.video;
+  const extensionName = path.extname(videoType.name);
+  const allowedExtension = ['.mp4'];;
+  if (!allowedExtension.includes(extensionName)) {
+    throw new CustomError.BadRequestError('Invalid video');
+  }
+  const imagePath = path.join(__dirname, '../public/video/' + `${videoType.name}`)
+  await videoType.mv(imagePath);
+
+  return res
+    .status(StatusCodes.OK)
+    .json({
+      videos: videoType.name
+    });
+};
 
 // local storage
 // const photosUploader = async (req, res) => {
